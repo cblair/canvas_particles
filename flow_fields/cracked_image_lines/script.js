@@ -5,7 +5,7 @@ canvas.height = 900; // window.innerHeight;
 
 // global settings
 ctx.lineWidth = 10;
-// ctx.strokeStyle = 'magenta';
+ctx.strokeStyle = 'magenta';
 // canvas shadows
 ctx.shadowOffsetX = 2;
 ctx.shadowOffsetY = 2;
@@ -28,23 +28,16 @@ const patternImage = document.getElementById('patternImage');
 const pattern1 = ctx.createPattern(patternImage, 'no-repeat');
 ctx.strokeStyle = pattern1;
 
-// ctx.strokeStyle = "white";
-
 class Line {
   constructor (canvas) {
     this.canvas = canvas;
     this.reset();
-    this.lineWidth = Math.floor(Math.random() * 25 + 1);
+    this.lineWidth = Math.floor(Math.random() * 15 + 1);
     this.hue = Math.floor(Math.random() * 360);
     this.maxLength = Math.floor(Math.random() * 150 + 10);
     this.speedX = Math.random() * 5 - 2.5;
     this.speedY = 6;
     this.lifeSpan = this.maxLength * 2;
-    this.breakPoint = this.lifeSpan * .85;
-    this.angle = 0;
-    this.va = Math.random() * .5 - .25;
-    this.curve = .1;
-    this.vc = Math.random() * .4 - .2;
   }
 
   draw (context) {
@@ -60,15 +53,10 @@ class Line {
 
   update() {
     this.timer++;
-    this.angle += this.va;
-    this.curve += this.vc;
     if (this.timer < this.lifeSpan) {
-      if (this.timer > this.breakPoint) {
-        this.va *= -1.12;
-      }
       // Add one segment to our line.
-      this.x += Math.sin(this.angle) * this.curve;
-      this.y += Math.cos(this.angle) * this.curve;
+      this.x += this.speedX + Math.random() * 20 - 10;
+      this.y += this.speedY + Math.random() * 20 - 10;
       this.history.push({x: this.x, y: this.y});
       // Delete the first segment if too many.
       if (this.history.length > this.maxLength) {
@@ -87,14 +75,11 @@ class Line {
     this.y = Math.random() * this.canvas.height;
     this.history = [{x: this.x, y: this.y}];
     this.timer = 0;
-    this.angle = 0;
-    this.curve = 0;
-    this.va = Math.random() * .5 - .25;
   }
 }
 
 const linesArray = [];
-const numberOfLines = 100;
+const numberOfLines = 50;
 for (let i = 0; i < numberOfLines; i++) {
   linesArray.push(new Line(canvas));
 }
