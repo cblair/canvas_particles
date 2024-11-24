@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-canvas.width = 500; // window.innerWidth;
-canvas.height = 500; // window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 // canvas settings
 ctx.fillStyle = 'white';
@@ -114,7 +114,7 @@ class Effect {
     this.height = this.canvas.height;
     this.particles = [];
     this.numberOfParticles = 4000;
-    this.cellSize = 20; // make smaller to make flow more smooth.
+    this.cellSize = 1; // make smaller to make flow more smooth.
     this.rows;
     this.cols;
     this.flowField = [];
@@ -142,7 +142,7 @@ class Effect {
   }
 
   drawText() {
-    this.context.font = '450px Impact';
+    this.context.font = '500px Impact';
     this.context.textAlign = 'center';
     this.context.textBaseline = 'middle';
     
@@ -171,10 +171,14 @@ class Effect {
     gradient3.addColorStop(.6, 'rgb(0,0,255)');
     gradient3.addColorStop(.8, 'rgb(0,0,0)');
 
-    this.context.fillStyle = gradient3;
+    this.context.fillStyle = gradient2;
 
 
-    this.context.fillText('JS', this.width * .5, this.height * .5,
+    this.context.fillText(
+      'FS', 
+      // 'JS', 
+      this.width * .5, 
+      this.height * .5,
       // max width of text
       this.width * .8
     );
