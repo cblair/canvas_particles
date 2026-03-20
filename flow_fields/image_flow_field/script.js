@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-canvas.width = 700;
-canvas.height = 900;
+canvas.width = window.innerWidth; // 700;
+canvas.height = window.innerHeight; // 900;
 
 // canvas settings
 ctx.fillStyle = 'white';
@@ -156,19 +156,24 @@ class Effect {
         this.context.fillText('JS', this.width * 0.5, this.height * 0.5, this.width);
     }
     drawFlowFieldImage(){
-        let imageSize = this.image.width * 3 // this.width * 0.8;
-        console.log({i: this.image})
+        // For smaller images, scale them up.
+        const scale = 2;
+
+        // Correctly center the image on the canvas.
+        const width = this.image.width * scale;
+        const height = this.image.height * scale;
+        const x = (this.width - width) / 2;
+        const y = (this.height - height) / 2;
+
+        console.log({i: this.image, x, y, width, height})
+
         this.context.drawImage(
           // image to draw
           this.image, 
-          // x
-          this.width * .7 - imageSize * 0.5, // this.width * 0.5 - imageSize * 0.5, 
-          // y
-          this.height * 0.4 - imageSize * 0.5,  // this.height * 0.5 - imageSize * 0.5, 
-          // width
-          this.image.width * 2, // imageSize, 
-          // height
-          this.image.height * 2, // imageSize,
+          x,
+          y,
+          width,
+          height,
         );
     }
     init(){

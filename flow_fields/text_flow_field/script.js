@@ -175,7 +175,7 @@ class Effect {
 
 
     this.context.fillText(
-      'FS', 
+      'JACK', 
       // 'JS', 
       this.width * .5, 
       this.height * .5,

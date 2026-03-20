@@ -102,6 +102,7 @@ class Effect {
         const dx = this.particles[a].x - this.particles[b].x;
         const dy = this.particles[a].y - this.particles[b].y;
         const distance = Math.hypot(dx, dy); // Calculate the hypotenuse from Pythangreon's Theroem.
+        const isTouching = distance - this.particles[a].radius - this.particles[b].radius
         if (distance < maxDistance) {
           // Draw line between the two particles.
           context.save(); // anything global styles we do meant only for this line will undone with restore().
