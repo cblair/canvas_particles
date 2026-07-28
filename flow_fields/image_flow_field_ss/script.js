@@ -156,19 +156,20 @@ class Effect {
         this.context.fillText('JS', this.width * 0.5, this.height * 0.5, this.width);
     }
     drawFlowFieldImage(){
-        let imageSize = this.image.width * 3 // this.width * 0.8;
-        console.log({i: this.image})
+        const drawWidth = this.image.width * 2;
+        const drawHeight = this.image.height * 2;
+        const imageSize = this.image.width * 3;
+        // Old y used imageSize centering and clipped the top ~25% off-canvas.
+        // Shift down by that amount so the full subject stays in view.
+        const x = this.width * 0.7 - imageSize * 0.5;
+        const y = this.height * 0.4 - imageSize * 0.5 + drawHeight * 0.25;
+        console.log({i: this.image, x, y, drawWidth, drawHeight})
         this.context.drawImage(
-          // image to draw
-          this.image, 
-          // x
-          this.width * .7 - imageSize * 0.5, // this.width * 0.5 - imageSize * 0.5, 
-          // y
-          this.height * 0.4 - imageSize * 0.5,  // this.height * 0.5 - imageSize * 0.5, 
-          // width
-          this.image.width * 2, // imageSize, 
-          // height
-          this.image.height * 2, // imageSize,
+          this.image,
+          x,
+          y,
+          drawWidth,
+          drawHeight,
         );
     }
     init(){
@@ -248,11 +249,18 @@ class Effect {
     }
 }
 
-const effect = new Effect(canvas, ctx);
+const image = document.getElementById('star');
 
-function animate(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    effect.render();
-    requestAnimationFrame(animate);
+function start(){
+    const effect = new Effect(canvas, ctx);
+
+    function animate(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        effect.render();
+        requestAnimationFrame(animate);
+    }
+    animate();
 }
-animate();
+
+if (image.complete && image.naturalWidth) start();
+else image.addEventListener('load', start);
